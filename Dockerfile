@@ -16,20 +16,22 @@ RUN mix do local.hex --force, local.rebar --force
 ENV MIX_ENV=prod
 
 # install mix dependencies
-COPY mix.exs mix.lock ./
+COPY ./mix.exs ./mix.lock ./
 COPY config config
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
 # Build web assets.
-COPY assets assets
-RUN npm install --prefix ./assets && npm run deploy --prefix ./assets
+COPY ./assets assets
+RUN cd ./assets && npx update-browserslist-db@latest
+RUN npm install --prefix ./assets
+RUN npm run deploy --prefix ./assets
 RUN mix phx.digest
 
 # Compile entire project.
-COPY priv priv
-COPY lib lib
-COPY rel rel
+COPY ./priv priv
+COPY ./lib lib
+COPY ./rel rel
 RUN mix compile
 
 # Build the entire release.
