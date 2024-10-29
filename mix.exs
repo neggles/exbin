@@ -64,7 +64,8 @@ defmodule Exbin.MixProject do
       {:sizeable, "~> 1.0"},
       {:cachex, "~> 3.4"},
       {:hammer, "~> 6.0"},
-      {:hammer_plug, "~> 2.1"}
+      {:hammer_plug, "~> 2.1"},
+      {:tzdata, "~> 1.1.2"}
     ]
   end
 
